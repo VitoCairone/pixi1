@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+  <script src="pixi.js"></script>
+<body>
+  <script type="text/javascript">
+    var type = "WebGL"
+    if(!PIXI.utils.isWebGLSupported()){
+      alert("no WebGL support, fallback to canvas");
+      type = "canvas"
+    }
+
+    PIXI.utils.sayHello(type)
+
+    //Create the renderer
+    var renderer = PIXI.autoDetectRenderer(256, 256);
+
+    //Add the canvas to the HTML document
+    document.body.appendChild(renderer.view);
+
+    //Create a container object called the `stage`
+    var stage = new PIXI.Container();
+
+
+    //Use Pixi's built-in `loader` object to load an image
+    PIXI.loader
+    .add("images/run_1.png")
+    .load(setup);
+
+    //This `setup` function will run when the image has loaded
+    function setup() {
+
+      //Create the `wizard` sprite from the texture
+      var wizard = new PIXI.Sprite(
+        PIXI.loader.resources["images/run_1.png"].texture
+      );
+
+      wizard.scale.set(0.3, 0.3);
+
+      //Add the wizard to the stage
+      stage.addChild(wizard);
+      
+      //Render the stage   
+      renderer.render(stage);
+    }
+
+  </script>
+</body>
+</html>
