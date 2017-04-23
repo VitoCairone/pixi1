@@ -36,10 +36,13 @@
       draw();
       requestAnimationFrame(animate);
     }
+
     function update() {
       for (var i = 0; i < circles.length; i++) {
-        circles[i].x += Math.random();
-        circles[i].y += Math.random();
+        circles[i].x += Math.random() * 20;
+        circles[i].x -= Math.random() * 15;
+        circles[i].y += Math.random() * 20;
+        circles[i].y -= Math.random() * 15;
       }
       console.log("updated " + circles.length);
     }
@@ -53,24 +56,25 @@
     function setup() {
 
       //Create the `wizard` sprite from the texture
-      var wizard = new PIXI.Sprite(
-        PIXI.loader.resources["images/run_1.png"].texture
-      );
+      // var wizard = new PIXI.Sprite(
+      //   PIXI.loader.resources["images/run_1.png"].texture
+      // );
 
-      wizard.scale.set(0.3, 0.3);
+      // wizard.scale.set(0.3, 0.3);
+
+      //Add the wizard to the stage
+      // stage.addChild(wizard);
 
       for (var i = 0; i < 100; i++) {
         // this draws a hollow circle
         var pixiCircle = new PIXI.Graphics();
-        pixiCircle.lineStyle(2, 0xFF00FF);  //(thickness, color)
+        pixiCircle.beginFill(0xFF00FF);
+        // pixiCircle.lineStyle(10, 0xFF00FF);  //(thickness, color)
         pixiCircle.drawCircle(0, 0, 10);   //(x,y,radius)
         pixiCircle.endFill();
         circles.push(pixiCircle);
         stage.addChild(pixiCircle);
       }
-
-      //Add the wizard to the stage
-      stage.addChild(wizard);
 
       requestAnimationFrame(animate);
     }
