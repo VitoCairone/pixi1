@@ -12,7 +12,6 @@ Magnetic = new function() {
   // console.log('SCREEN_WIDTH is ' + SCREEN_WIDTH);
   // console.log('SCREEN_HEIGHT is ' + SCREEN_HEIGHT);
   
-  var MAGNETS_AT_START = 8;
   var PARTICLES_PER_MAGNET = 7;
   var MAGNETIC_FORCE_THRESHOLD = 300;
 
@@ -200,7 +199,7 @@ Magnetic = new function() {
       [85, 80]
     ]
 
-    for (var i = 0; i < MAGNETS_AT_START; i++) {
+    for (var i = 0; i < 8; i++) {
 
       var position = {
         x: centers[i][0] / 100 * w,
