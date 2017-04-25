@@ -3,10 +3,17 @@
 <head>
   <meta charset="utf-8">
   <title>Hello World</title>
+  <style>
+    * {padding: 0; margin: 0}
+  </style>
 </head>
   <script src="pixi.js"></script>
   <script src="piximags.js"></script>
 <body>
+
+  <div id="fillout" style="position: absolute; height: 600px; width: 100%; background-color: red;">
+  <div id="fillout300" style="position: absolute; height: 300px; width: 100%; background-color: blue;">
+
   <script type="text/javascript">
     var type = "WebGL"
     if(!PIXI.utils.isWebGLSupported()){
@@ -17,7 +24,30 @@
     PIXI.utils.sayHello(type)
 
     //Create the renderer
-    var renderer = PIXI.autoDetectRenderer(256, 256);
+
+    // kitkatattack sez: "Importantly: although the stage also has width and 
+    // height properties, they don't refer to the size of the rendering 
+    // window. The stage's width and height just tell you the area occupied 
+    // by the things you put inside it
+
+    var widthPixels = 200;
+    var heightPixels = 200;
+    var renderer = PIXI.autoDetectRenderer(
+      widthPixels,
+      heightPixels,
+      {
+        antialias: false,
+        transparent: true,
+        resoultion: 1
+      });
+
+    renderer.view.style.position = "absolute";
+    renderer.view.style.display = "block";
+    renderer.autoResize = true;
+    // console.log("iW = " + window.innerWidth);
+    // console.log("iH = " + window.innerHeight);
+    // unknown why window.innerHeight is 604 when actual height is not??
+    renderer.resize(window.innerWidth, 600);
 
     //Add the canvas to the HTML document
     document.body.appendChild(renderer.view);

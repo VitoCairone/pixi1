@@ -2,9 +2,11 @@ console.log('running mags.js');
 
 Magnetic = new function() {
 
-  var SCREEN_WIDTH = window.innerWidth;
-  var SCREEN_HEIGHT = 260; //window.innerHeight;
+  // set on init
+  var RENDER_WIDTH = 0;
+  var RENDER_HEIGHT = 0;
 
+  // unused ?
   var RIGHT_OFFSET_CONST = 38;
 
   // console.log('SCREEN_WIDTH is ' + SCREEN_WIDTH);
@@ -29,14 +31,12 @@ Magnetic = new function() {
   var nextParticleId = 0;
   var maxMarkedParticles = 0;
   
-  var mouseX = (window.innerWidth - SCREEN_WIDTH);
-  var mouseY = (window.innerHeight - SCREEN_HEIGHT);
-  var mouseIsDown = false;
-  var mouseDownTime = 0;
-  
   this.init = function(renderer, stage) {
       
     this.renderer = renderer;
+    RENDER_WIDTH = renderer.view.width;
+    RENDER_HEIGHT = renderer.view.height;
+
     this.stage = stage;
     preCreateGraphics();
     createMagnets();
@@ -181,29 +181,30 @@ Magnetic = new function() {
   }
 
   function createMagnets() {
-    var w = 256;
-    var h = 256;
+    var w = RENDER_WIDTH;
+    var h = RENDER_HEIGHT;
     
     // this will be magnets[0]
     createMagnetAndParticles({x: w / 2, y: h / 2});
+
     magnets[0].orbit = 20;
 
     var centers = [
-      [15, 15],
-      [15, 30],
-      [15, 45],
+      [15, 20],
+      [15, 40],
       [15, 60],
-      [85, 15],
-      [85, 30],
-      [85, 45],
-      [85, 60]
+      [15, 80],
+      [85, 20],
+      [85, 40],
+      [85, 60],
+      [85, 80]
     ]
 
     for (var i = 0; i < MAGNETS_AT_START; i++) {
 
       var position = {
         x: centers[i][0] / 100 * w,
-        y: centers[i][1] / 100 * w
+        y: centers[i][1] / 100 * h
         // x: w * 0.15,
         // y: w * (0.15 + 0.2 * (i % 4)),
       };
@@ -374,8 +375,8 @@ Magnetic = new function() {
         particle.position.y = particle.shift.y + Math.sin(i+particle.angle) * (particle.orbit*particle.force*orbitPush);
         
         // Limit to screen bounds
-        particle.position.x = Math.max( Math.min( particle.position.x, SCREEN_WIDTH-particle.size/2 ), particle.size/2 );
-        particle.position.y = Math.max( Math.min( particle.position.y, SCREEN_HEIGHT-particle.size/2 ), particle.size/2 );
+        particle.position.x = Math.max( Math.min( particle.position.x, RENDER_WIDTH-particle.size/2 ), particle.size/2 );
+        particle.position.y = Math.max( Math.min( particle.position.y, RENDER_HEIGHT-particle.size/2 ), particle.size/2 );
         
         // Slowly inherit the closest magnets orbit
         particle.orbit += ( particle.magnet.orbit - particle.orbit ) * 0.1;
