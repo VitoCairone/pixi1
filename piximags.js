@@ -12,7 +12,8 @@ Magnetic = new function() {
   // console.log('SCREEN_WIDTH is ' + SCREEN_WIDTH);
   // console.log('SCREEN_HEIGHT is ' + SCREEN_HEIGHT);
   
-  var PARTICLES_PER_MAGNET = 7;
+  var MAX_PARTICLES = 1000;
+  var PARTICLES_PER_MAGNET = MAX_PARTICLES / 10;
   var MAGNETIC_FORCE_THRESHOLD = 300;
 
   var LOW_ORBIT = 4;
@@ -37,7 +38,7 @@ Magnetic = new function() {
     RENDER_HEIGHT = renderer.view.height;
 
     this.stage = stage;
-    preCreateGraphics();
+    preCreateGraphics(MAX_PARTICLES);
     createMagnets();
       
     window.addEventListener('resize', windowResizeHandler, false);
@@ -237,8 +238,11 @@ Magnetic = new function() {
   }
 
   function preCreateGraphics(count) {
+    if (typeof count === 'undefined') {
+      count = 800;
+    }
 
-    for (var i = 0; i < 800; i++) {
+    for (var i = 0; i < count; i++) {
       var graphic = new PIXI.Graphics();
 
       // don't do this! use generateTextures()
@@ -512,7 +516,7 @@ function Particle() {
   this.position = { x: 0, y: 0 };
   this.shift = { x: 0, y: 0 };
   this.angle = 0;
-  this.speed = 0.02 + 0.02 * Math.random() + this.size * 0.004;
+  this.speed = 0.02 + 0.1 * Math.random() + this.size * 0.004;
   this.force = 2.1 + Math.random() * 0.2; // 1.5 + Math.random() * 1.5;
   this.color = '#ddddff';
   this.innerColorStop = 'rgba(256,256,256,1.0)';

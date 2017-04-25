@@ -19,6 +19,8 @@
     if(!PIXI.utils.isWebGLSupported()){
       alert("no WebGL support, fallback to canvas");
       type = "canvas"
+    } else {
+      console.log("Using WebGL!");
     }
 
     PIXI.utils.sayHello(type)
